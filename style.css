@@ -96,6 +96,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    scroll-margin-top: 80px;
 }
 
 /* Scroll progress uses transform which benefits from GPU layer */
@@ -587,19 +588,39 @@ body {
 
 /* ======= ABOUT SECTION ======= */
 .about-grid {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
     max-width: 1000px;
     margin: 0 auto;
 }
 
-.about-text {
+.about-text, .education-text {
     padding: 40px;
 }
 
-.about-text p {
+.about-points {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 20px;
+}
+
+.about-points li {
     margin-bottom: 20px;
     font-size: 1.1rem;
     color: var(--text-muted);
+    position: relative;
+    padding-left: 25px;
+    line-height: 1.6;
+}
+
+.about-points li::before {
+    content: "▹";
+    color: var(--accent-primary);
+    position: absolute;
+    left: 0;
+    top: 2px;
+    font-size: 1.2rem;
 }
 
 .about-text strong {
@@ -697,6 +718,47 @@ body {
     background-color: var(--accent-primary);
     border-radius: 50%;
     box-shadow: 0 0 10px var(--accent-primary);
+}
+
+/* ======= EDUCATION ACCORDION ======= */
+details.education-text {
+    --accent-primary: var(--accent-secondary);
+    transition: var(--transition);
+}
+
+.education-summary-block {
+    cursor: pointer;
+    list-style: none;
+    outline: none;
+}
+
+.education-summary-block::-webkit-details-marker {
+    display: none;
+}
+
+.education-summary-block .category-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.accordion-icon-container {
+    margin-left: auto;
+}
+
+.education-summary-block .accordion-icon {
+    transition: transform 0.3s ease;
+    color: var(--accent-primary);
+    font-size: 1.2rem;
+}
+
+details[open] .education-summary-block .accordion-icon {
+    transform: rotate(180deg);
+}
+
+/* Connect the timeline lines between summary and details */
+details.education-text[open] .education-summary-block .timeline::before {
+    height: calc(100% + 40px); /* Extend line to connect with next item */
 }
 
 /* ======= SKILLS SECTION ======= */
@@ -1386,12 +1448,56 @@ body {
 
 @media (max-width: 768px) {
     .section {
-        padding: 80px 5%;
-        min-height: auto; /* Remove fixed viewport height to reduce layout cost */
+        padding: 50px 5%;
+        min-height: auto;
+    }
+
+    .about-text, details.education-text {
+        padding: 20px;
+    }
+
+    .education-summary-block .category-header h3 {
+        font-size: 1.25rem !important;
+        margin-left: 10px !important;
+    }
+
+    .timeline::before,
+    details.education-text[open] .education-summary-block .timeline::before {
+        left: 10px;
+    }
+
+    .timeline-item {
+        padding-left: 30px;
+        margin-bottom: 30px;
+    }
+
+    .timeline-dot {
+        left: 4px;
+        width: 12px;
+        height: 12px;
     }
 
     .hero {
         min-height: 100vh; /* Keep hero full-screen */
+    }
+
+    /* Place scroll arrow below icons instead of overlapping */
+    .scroll-down-indicator {
+        position: static;
+        transform: none;
+        display: block;
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 10px;
+    }
+
+    .tech-badge {
+        margin-bottom: 20px;
+        display: block;
+        text-align: center;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .hero-title {
@@ -1443,20 +1549,8 @@ body {
         background: rgba(5, 8, 15, 0.98);
     }
 
-    /* Remove heavy box-shadow glows on mobile */
-    .social-icon, .social-btn {
-        box-shadow: none !important;
-    }
-    .social-icon:hover, .social-btn:hover {
-        box-shadow: none !important;
-        transform: none; /* Disable hover transform on touch devices */
-    }
 
-    /* Hide particles on mobile for performance */
-    .particles-bg,
-    .particles-bg canvas {
-        display: none !important;
-    }
+
 
 
 
@@ -1497,6 +1591,19 @@ body {
         display: inline-block;
         margin-bottom: 15px;
         width: auto;
+    }
+
+    /* Fit all 5 social icons in one row on mobile */
+    .social-links-hero {
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: nowrap;
+    }
+    .social-links-hero .social-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.4rem;
+        border-radius: 10px;
     }
 
     .about-grid {

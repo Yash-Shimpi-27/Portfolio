@@ -214,11 +214,12 @@ if (contactForm) {
 
 // Scroll Progress Bar & Back To Top Button (Moved to centralized Scroll Listener)
 
-// 4. Mouse-Reactive Particles Background (Desktop Only)
-if (typeof particlesJS !== 'undefined' && document.getElementById('particles-bg') && window.innerWidth > 768) {
+// 4. Mouse-Reactive Particles Background (Desktop + reduced on Mobile)
+const isMobile = window.innerWidth <= 768;
+if (typeof particlesJS !== 'undefined' && document.getElementById('particles-bg')) {
     particlesJS('particles-bg', {
         particles: {
-            number: { value: 80, density: { enable: true, value_area: 900 } },
+            number: { value: isMobile ? 40 : 80, density: { enable: true, value_area: 900 } },
             color: { value: ["#00ff88", "#00b8ff", "#7b61ff", "#00ffe0"] },
             shape: {
                 type: ["circle", "triangle", "edge"],
@@ -255,8 +256,8 @@ if (typeof particlesJS !== 'undefined' && document.getElementById('particles-bg'
         interactivity: {
             detect_on: "canvas",
             events: {
-                onhover: { enable: true, mode: "grab" },
-                onclick: { enable: true, mode: "push" },
+                onhover: { enable: !isMobile, mode: "grab" },
+                onclick: { enable: !isMobile, mode: "push" },
                 resize: true
             },
             modes: {
