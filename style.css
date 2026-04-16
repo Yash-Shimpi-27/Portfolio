@@ -744,12 +744,33 @@ details.education-text {
 
 .accordion-icon-container {
     margin-left: auto;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--accent-primary);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(10, 15, 30, 0.5);
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 10px rgba(0, 184, 255, 0.2);
+    transition: var(--transition);
+}
+
+.education-summary-block:hover .accordion-icon-container {
+    background: var(--accent-primary);
+    box-shadow: 0 0 20px rgba(0, 184, 255, 0.4);
+    transform: scale(1.05);
+}
+
+.education-summary-block:hover .accordion-icon {
+    color: var(--bg-darker) !important;
 }
 
 .education-summary-block .accordion-icon {
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, color 0.3s ease;
     color: var(--accent-primary);
-    font-size: 1.2rem;
+    font-size: 0.85rem;
 }
 
 details[open] .education-summary-block .accordion-icon {
@@ -1130,20 +1151,22 @@ details.education-text[open] .education-summary-block .timeline::before {
     font-weight: 400;
 }
 
-.exp-details {
+.exp-details, .project-details {
     list-style: none;
+    margin-bottom: 20px;
 }
 
-.exp-details li {
+.exp-details li, .project-details li {
     margin-bottom: 10px;
     color: var(--text-muted);
     position: relative;
     padding-left: 20px;
     font-size: 0.95rem;
+    line-height: 1.5;
 }
 
-.exp-details li::before {
-    content: '>';
+.exp-details li::before, .project-details li::before {
+    content: '▹';
     position: absolute;
     left: 0;
     color: var(--accent-primary);
