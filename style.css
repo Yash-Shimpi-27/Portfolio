@@ -1609,6 +1609,12 @@ details.education-text[open] .education-summary-block .timeline::before {
         align-items: center;
         text-align: center;
     }
+
+    .project-details {
+        text-align: left;
+        align-self: flex-start;
+        width: 100%;
+    }
     .project-date {
         position: static;
         display: inline-block;
